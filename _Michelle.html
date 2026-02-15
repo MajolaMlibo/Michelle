@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Note for Michelle</title>
+    <style>
+        :root {
+            --rose-petal: #f8e1e1;
+            --deep-rose: #b04759;
+            --gold: #c5a059;
+            --soft-white: #fffcfc;
+        }
+
+        body {
+            background-color: var(--rose-petal);
+            font-family: 'serif', 'Georgia', Times;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #4a4a4a;
+        }
+
+        .container {
+            background: var(--soft-white);
+            max-width: 400px;
+            width: 100%;
+            padding: 40px 25px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(176, 71, 89, 0.15);
+            text-align: center;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .rose-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: var(--deep-rose);
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+
+        .riddle-box {
+            background: #fffafa;
+            padding: 20px;
+            border: 1px dashed var(--gold);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--deep-rose);
+        }
+
+        .primary-btn {
+            background: var(--deep-rose);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(176, 71, 89, 0.3);
+        }
+
+        #hidden-content {
+            display: none;
+            animation: fadeIn 1.5s;
+        }
+
+        .no-btn {
+            background: none;
+            border: none;
+            color: #888;
+            text-decoration: underline;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-card">
+        <span class="rose-icon">🌹</span>
+        <h1>A Curiosity for Michelle</h1>
+        
+        <div id="riddle-section">
+            <div class="riddle-box">
+                "I capture a moment but never hold it.<br>
+                I have an eye but cannot see.<br>
+                I bring the past to the present.<br>
+                What am I?"
+            </div>
+            <input type="text" id="answer" placeholder="Your answer...">
+            <button class="primary-btn" onclick="checkAnswer()">Unlock Message</button>
+        </div>
+
+        <div id="hidden-content">
+            <p><strong>Correct.</strong> I knew you were as sharp as you are elegant.</p>
+            <p>M ~ 🌹</p>
+            <p> My fyp kept on bringing me back to your TikTok lives', it was clearly a divine intervention won't you say?</p>
+            <p> I love your online energy, but I’d love to see what a real conversation is like. Shall we?</p>
+            
+            <button class="primary-btn" onclick="startTalk()">Yes, let's talk</button>
+            <button class="no-btn" id="no-btn" onclick="handleNo()">Maybe later</button>
+        </div>
+    </div>
+
+    <script>
+        let noCount = 0;
+
+        function checkAnswer() {
+            const ans = document.getElementById('answer').value.toLowerCase().trim();
+            if (ans.includes("camera") || ans.includes("photography")) {
+                document.getElementById('riddle-section').style.display = 'none';
+                document.getElementById('hidden-content').style.display = 'block';
+            } else {
+                alert("Not quite... think about your favorite hobby! 📸");
+            }
+        }
+
+        function handleNo() {
+            const noBtn = document.getElementById('no-btn');
+            noCount++;
+
+            if (noCount === 1) {
+                noBtn.innerHTML = "Are you sure? Scrolling is better when you're actually talking...";
+            } else if (noCount === 2) {
+                noBtn.innerHTML = "Wait... my code is blushing. Try 'Yes' instead?";
+            } else if (noCount === 3) {
+                noBtn.innerHTML = "Okay, now you're just being difficult (and cute).";
+                noBtn.style.fontSize = "10px";
+            } else {
+                alert("I've disabled this button because you're too interesting to say no to. 😊");
+                noBtn.style.display = "none";
+            }
+        }
+
+        function startTalk() {
+            /* Change YOUR_INSTAGRAM_USERNAME to your actual handle */
+            const instagramUsername = "mlibomajola_"; 
+            const funnyMessage = "Hey Major, I think I like you...";
+            
+            // Copy message to clipboard
+            navigator.clipboard.writeText(funnyMessage).then(() => {
+                // alert("I've copied a secret message for you to paste into my DMs. 😉");
+                window.location.href = "https://www.instagram.com/" + instagramUsername + "/";
+            });
+        }
+    </script>
+</body>
+</html>
