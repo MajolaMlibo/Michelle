@@ -58,6 +58,15 @@
             line-height: 1.6;
         }
 
+        #stage-indicator {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 10px;
+            display: block;
+        }
+
         input[type="text"] {
             width: 80%;
             padding: 12px;
@@ -115,21 +124,19 @@
         <h1>A Curiosity for Michelle</h1>
         
         <div id="riddle-section">
-            <div class="riddle-box">
-                "I capture a moment but never hold it.<br>
-                I have an eye but cannot see.<br>
-                I bring the past to the present.<br>
-                What am I?"
+            <span id="stage-indicator">Stage 1: The Bloom</span>
+            <div class="riddle-box" id="riddle-text">
+                "I have a stem but no roots. I have petals but no wings. I am the color of love but I can also draw blood. What am I?"
             </div>
             <input type="text" id="answer" placeholder="Your answer...">
-            <button class="primary-btn" onclick="checkAnswer()">Unlock Message</button>
+            <button class="primary-btn" onclick="checkAnswer()">Unlock Next Stage</button>
         </div>
 
         <div id="hidden-content">
             <p><strong>Correct.</strong> I knew you were as sharp as you are elegant.</p>
             <p>M ~ 🌹</p>
-            <p> My fyp kept on bringing me back to your TikTok lives', it was clearly a divine intervention won't you say?</p>
-            <p> I love your online energy, but I’d love to see what a real conversation is like. Shall we?</p>
+            <p>My fyp kept on bringing me back to your TikTok lives', it was clearly a divine intervention won't you say?</p>
+            <p>I love your online energy, but I’d love to see what a real conversation is like. Shall we?</p>
             
             <button class="primary-btn" onclick="startTalk()">Yes, let's talk</button>
             <button class="no-btn" id="no-btn" onclick="handleNo()">Maybe later</button>
@@ -138,14 +145,42 @@
 
     <script>
         let noCount = 0;
+        let currentStage = 1;
+
+        const stages = {
+            1: {
+                indicator: "Stage 1: The Bloom",
+                riddle: "I have a stem but no roots. I have petals but no wings. I am the color of love but I can also draw blood. What am I?",
+                answers: ["rose", "roses"]
+            },
+            2: {
+                indicator: "Stage 2: The Reflection",
+                riddle: "I can show you beauty, but I cannot see. I can double your image, but I am not a twin. I am often found in your bag, reflecting your soul. What am I?",
+                answers: ["mirror", "compact"]
+            },
+            3: {
+                indicator: "Stage 3: The Lens",
+                riddle: "I capture a moment but never hold it. I have an eye but cannot see. I bring the past to the present. What am I?",
+                answers: ["camera", "photography"]
+            }
+        };
 
         function checkAnswer() {
             const ans = document.getElementById('answer').value.toLowerCase().trim();
-            if (ans.includes("camera") || ans.includes("photography")) {
-                document.getElementById('riddle-section').style.display = 'none';
-                document.getElementById('hidden-content').style.display = 'block';
+            const stage = stages[currentStage];
+
+            if (stage.answers.some(correct => ans.includes(correct))) {
+                currentStage++;
+                if (currentStage > 3) {
+                    document.getElementById('riddle-section').style.display = 'none';
+                    document.getElementById('hidden-content').style.display = 'block';
+                } else {
+                    document.getElementById('stage-indicator').innerHTML = stages[currentStage].indicator;
+                    document.getElementById('riddle-text').innerHTML = stages[currentStage].riddle;
+                    document.getElementById('answer').value = "";
+                }
             } else {
-                alert("Not quite... think about one of your hobbies! 📸");
+                alert("Not quite... think carefully, Michelle! ✨");
             }
         }
 
@@ -167,13 +202,10 @@
         }
 
         function startTalk() {
-            /* Change YOUR_INSTAGRAM_USERNAME to your actual handle */
             const instagramUsername = "mlibomajola_"; 
             const funnyMessage = "Hey Major, I think I like you...";
             
-            // Copy message to clipboard
             navigator.clipboard.writeText(funnyMessage).then(() => {
-                // alert("I've copied a secret message for you to paste into my DMs. 😉");
                 window.location.href = "https://www.instagram.com/" + instagramUsername + "/";
             });
         }
